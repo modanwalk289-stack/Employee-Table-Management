@@ -2,9 +2,20 @@ import Navbar from "../components/Navbar";
 import DashboardCard from "../components/DashboardCard";
 import SearchBar from "../components/SearchBar";
 import EmployeeTable from "../components/EmployeeTable";
+import { useContext, useState } from "react";
+import { EmployeeContext } from "../context/EmployeeContext";
 // import DeleteModal from "../components/DeleteModal";
 
 export default function Dashboard() {
+
+    const { employees } = useContext(EmployeeContext);
+    const [search, setSearch] = useState("");
+
+    const filteredEmployees = employees.filter((employee) =>
+    employee.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+
   return (
     <>
       <Navbar />
@@ -23,10 +34,10 @@ export default function Dashboard() {
         </div>
 
        
-        <SearchBar />
+        <SearchBar search ={search} setSearch={setSearch} />
 
       
-        <EmployeeTable />
+        <EmployeeTable  employees={filteredEmployees}/>
 
         
       </div>

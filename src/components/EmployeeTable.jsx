@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-export default function EmployeeTable() {
+
+export default function EmployeeTable({ employees }) {
   return (
-    <div className="bg-white  w-full shadow-lg rounded-xl p-8 mt-6 table-auto">
-      <table className="w-full border-collapse">
+    <div className="w-full bg-white shadow-lg rounded-xl p-6 mt-6">
+      <table className="w-full table-auto">
         <thead>
           <tr className="bg-gray-100">
             <th className="p-3 text-left">ID</th>
@@ -15,27 +16,41 @@ export default function EmployeeTable() {
         </thead>
 
         <tbody>
-          <tr className="border-b">
-            <td className="p-3">101</td>
-            <td className="p-3">John Doe</td>
-            <td className="p-3">IT</td>
-            <td className="p-3">john@example.com</td>
-            <td className="p-3">
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                Active
-              </span>
-            </td>
-            <td className="p-3  text-center">
-                <Link to="./edit-employee">
-              <button className="bg-yellow-500 cursor-pointer text-white px-3 py-1 rounded mr-2">
-                Edit
-              </button>
-              </Link>
-              <button className="bg-red-500 cursor-pointer text-white px-3 py-1 rounded">
-                Delete
-              </button>
-            </td>
-          </tr>
+          {employees.map((employee) => (
+            <tr key={employee.id} className="border-b hover:bg-gray-50">
+              <td className="p-3">{employee.id}</td>
+
+              <td className="p-3">{employee.name}</td>
+
+              <td className="p-3">{employee.department}</td>
+
+              <td className="p-3">{employee.email}</td>
+
+              <td className="p-3">
+                <span
+                  className={`px-3 py-1 rounded-full text-sm ${
+                    employee.status === "Active"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {employee.status}
+                </span>
+              </td>
+
+              <td className="p-3 text-center">
+                <Link to="/edit-employee">
+                  <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 cursor-pointer mr-2">
+                    Edit
+                  </button>
+                </Link>
+
+                <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 cursor-pointer">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
