@@ -1,48 +1,195 @@
-export default function EmployeeDetails() {
+import { useState, useContext } from "react";
+import { EmployeeContext } from "../context/EmployeeContext";
+import { useNavigate } from "react-router-dom";
+
+export default function AddEmployee() {
+  const { employees, setEmployees } = useContext(EmployeeContext);
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    department: "",
+    designation: "",
+    salary: "",
+    joiningDate: "",
+    status: "Active",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newEmployee = {
+      id: employees.length + 101,
+      ...formData,
+    };
+
+    setEmployees([...employees, newEmployee]);
+
+    navigate("/dashboard");
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
-      <div className="bg-white w-[600px] rounded-xl shadow-lg p-8">
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center py-10">
+      <div className="bg-white w-[500px] rounded-xl shadow-lg p-8">
 
         <h1 className="text-3xl font-bold text-center mb-8">
-          Employee Details
+          Add Employee
         </h1>
 
-        <div className="flex justify-center mb-6">
-          <img
-            src="https://via.placeholder.com/120"
-            alt="Employee"
-            className="w-28 h-28 rounded-full border-4 border-blue-500"
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+                      <div>
+            <label className="block mb-2 font-medium">
+              Full Name
+            </label>
 
-        <div className="space-y-4">
-          <p><span className="font-semibold">Employee ID:</span> EMP101</p>
-          <p><span className="font-semibold">Full Name:</span> John Doe</p>
-          <p><span className="font-semibold">Email:</span> john@example.com</p>
-          <p><span className="font-semibold">Phone:</span> +91 9876543210</p>
-          <p><span className="font-semibold">Department:</span> IT</p>
-          <p><span className="font-semibold">Designation:</span> Software Engineer</p>
-          <p><span className="font-semibold">Salary:</span> ₹50,000</p>
-          <p><span className="font-semibold">Joining Date:</span> 22 July 2026</p>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter Full Name"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
 
-          <p>
-            <span className="font-semibold">Status:</span>
-            <span className="ml-2 bg-green-100 text-green-700 px-3 py-1 rounded-full">
-              Active
-            </span>
-          </p>
-        </div>
+          <div>
+            <label className="block mb-2 font-medium">
+              Email
+            </label>
 
-        <div className="flex justify-between mt-8">
-          <button className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 cursor-pointer">
-            Edit
-          </button>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter Email"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
 
-          <button className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 cursor-pointer">
-            Back
-          </button>
-        </div>
+          <div>
+            <label className="block mb-2 font-medium">
+              Phone Number
+            </label>
 
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter Phone Number"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">
+              Department
+            </label>
+
+            <input
+              type="text"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              placeholder="Enter Department"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+                    <div>
+            <label className="block mb-2 font-medium">
+              Designation
+            </label>
+
+            <input
+              type="text"
+              name="designation"
+              value={formData.designation}
+              onChange={handleChange}
+              placeholder="Enter Designation"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">
+              Salary
+            </label>
+
+            <input
+              type="number"
+              name="salary"
+              value={formData.salary}
+              onChange={handleChange}
+              placeholder="Enter Salary"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">
+              Joining Date
+            </label>
+
+            <input
+              type="date"
+              name="joiningDate"
+              value={formData.joiningDate}
+              onChange={handleChange}
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">
+              Status
+            </label>
+
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div className="flex justify-between mt-8">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 cursor-pointer"
+            >
+              Add Employee
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard")}
+              className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 cursor-pointer"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
