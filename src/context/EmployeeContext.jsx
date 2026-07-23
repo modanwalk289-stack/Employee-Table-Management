@@ -27,8 +27,33 @@ export default function EmployeeProvider({ children }) {
     },
   ]);
 
+  const deleteEmployee = (id) => {
+   
+    setEmployees(
+      employees.filter((employee) => employee.id !== id)
+    );
+  };
+
+   const updateEmployee = (updatedEmployee) => {
+    setEmployees(
+      employees.map((employee) =>
+        employee.id === updatedEmployee.id
+          ? updatedEmployee
+          : employee
+      )
+    );
+  };
+
+
   return (
-    <EmployeeContext.Provider value={{ employees, setEmployees }}>
+    <EmployeeContext.Provider
+      value={{
+        employees,
+        setEmployees,
+        deleteEmployee,
+        updateEmployee,
+      }}
+    >
       {children}
     </EmployeeContext.Provider>
   );
