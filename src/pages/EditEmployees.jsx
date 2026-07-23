@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EmployeeContext } from "../context/EmployeeContext";
+import toast from "react-hot-toast";
 
 export default function EditEmployee() {
   const { id } = useParams();
@@ -41,6 +42,8 @@ export default function EditEmployee() {
     e.preventDefault();
 
     updateEmployee(formData);
+
+    toast.success("Employee Updated Successfully");
 
     navigate("/dashboard");
   };

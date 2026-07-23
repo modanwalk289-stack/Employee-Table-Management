@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { EmployeeContext } from "../context/EmployeeContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function AddEmployee() {
   const { employees, setEmployees } = useContext(EmployeeContext);
@@ -34,6 +35,8 @@ export default function AddEmployee() {
     };
 
     setEmployees([...employees, newEmployee]);
+
+    toast.success("Employee Added Successfully")
 
     navigate("/dashboard");
   };

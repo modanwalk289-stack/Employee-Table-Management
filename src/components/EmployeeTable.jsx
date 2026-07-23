@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { useContext, useState,useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EmployeeContext } from "../context/EmployeeContext";
+import toast from "react-hot-toast";
+
+
 export default function EmployeeTable({ employees }) {
 const { deleteEmployee } = useContext(EmployeeContext);
 
@@ -93,7 +96,7 @@ const [showModal, setShowModal] = useState(false);
         <button
           onClick={() => {
             deleteEmployee(selectedId);
-            
+            toast.success("Employee Deleted Succesfully")
             setShowModal(false);
           }}
           className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 cursor-pointer"
